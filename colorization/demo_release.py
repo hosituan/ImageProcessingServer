@@ -3,7 +3,7 @@ import os
 import ntpath
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 import argparse
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from colorizers import *
 
@@ -43,10 +43,11 @@ out_img_siggraph17_name = filename + "_siggraph17.png"
 APP_ROOT = os.getcwd()
 OUTPUT_FOLDER = os.path.join(APP_ROOT, 'output/images/')
 os.chdir(OUTPUT_FOLDER)
-plt.imsave(out_img_eccv16_name, out_img_eccv16)
-plt.imsave(out_img_siggraph17_name, out_img_siggraph17)
 
-command = "aws s3 sync . imageprocessedpython s3://your-s3-bucket-name/folder-name"
+# plt.imsave(out_img_eccv16_name, out_img_eccv16)
+# plt.imsave(out_img_siggraph17_name, out_img_siggraph17)
+
+# command = "aws s3 sync . imageprocessedpython s3://your-s3-bucket-name/folder-name"
 
 # plt.imsave('%s_eccv16.png'%opt.save_prefix, out_img_eccv16)
 # plt.imsave('%s_siggraph17.png'%opt.save_prefix, out_img_siggraph17)
