@@ -14,6 +14,22 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
+import cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+  cloud_name = 'dggbuxa59',  
+  api_key = '651855936159331',  
+  api_secret = 'YZcmgha2qUntVE_QrxeCThMLJEM'  
+)
+
+def upload_diary(filename):
+  OUTPUT_FOLDER = os.path.join(APP_ROOT, 'output/colorize/')
+  os.chdir(OUTPUT_FOLDER)
+  respone = cloudinary.uploader.upload(filename, folder = "colorize")
+  return respone['url']
 
 
 
@@ -36,44 +52,40 @@ def upload_file():
               success=False,
               message="No file",
             )
-            # return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
               return jsonify(
               success=False,
               message="File name is blank",
             )
-            #return redirect(request.url)
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             #colorize
-
-            command = "python colorization/demo_release.py -i " + UPLOAD_FOLDER + "/" + filename
+            command = "python3 colorization/demo_release.py -i " + UPLOAD_FOLDER + "/" + filename
             os.system(command)
+            out_img_eccv16_name = str(filename + "_eccv16.png")
+            out_img_siggraph17_name = str(filename + "_siggraph17.png")
+            url1 = upload_diary(out_img_eccv16_name)
+            url2 = upload_diary(out_img_siggraph17_name)
             return jsonify(
               success=True,
               message="File name is uploaded",
               fileName=file.filename,
               path=UPLOAD_FOLDER,
-              script=command
+              script=command,
+              url1=url1,
+              url2=url2
             )
 
 
     return "This is GET method"
 
 
-# @app.route('/uploads/<filename>')
-# def uploaded_file(filename):
-#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-
-
-
-
-
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))
   app.run(host='0.0.0.0', port=port, debug=True)
+
+

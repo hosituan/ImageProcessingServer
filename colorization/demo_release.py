@@ -3,7 +3,7 @@ import os
 import ntpath
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 import argparse
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 from colorizers import *
 
@@ -38,51 +38,17 @@ out_img_siggraph17 = postprocess_tens(tens_l_orig, colorizer_siggraph17(tens_l_r
 filename = ntpath.basename(opt.img_path)
 
 out_img_eccv16_name = str(filename + "_eccv16.png")
-out_img_siggraph17_name = filename + "_siggraph17.png"
+out_img_siggraph17_name = str(filename + "_siggraph17.png")
 
 APP_ROOT = os.getcwd()
-OUTPUT_FOLDER = os.path.join(APP_ROOT, 'output/images/')
+OUTPUT_FOLDER = os.path.join(APP_ROOT, 'output/colorize/')
 os.chdir(OUTPUT_FOLDER)
 
-# plt.imsave(out_img_eccv16_name, out_img_eccv16)
-# plt.imsave(out_img_siggraph17_name, out_img_siggraph17)
-
-# command = "aws s3 sync . imageprocessedpython s3://your-s3-bucket-name/folder-name"
-
-# plt.imsave('%s_eccv16.png'%opt.save_prefix, out_img_eccv16)
-# plt.imsave('%s_siggraph17.png'%opt.save_prefix, out_img_siggraph17)
+plt.imsave(out_img_eccv16_name, out_img_eccv16)
+plt.imsave(out_img_siggraph17_name, out_img_siggraph17)
 
 
-# plt.figure(figsize=(12,8))
-# plt.subplot(2,2,1)
-# plt.imshow(img)
-# plt.title('Original')
-# plt.axis('off')
 
-# plt.subplot(2,2,2)
-# plt.imshow(img_bw)
-# plt.title('Input')
-# plt.axis('off')
 
-# plt.subplot(2,2,3)
-# plt.imshow(out_img_eccv16)
-# plt.title('Output (ECCV 16)')
-# plt.axis('off')
 
-# plt.subplot(2,2,4)
-# plt.imshow(out_img_siggraph17)
-# plt.title('Output (SIGGRAPH 17)')
-# plt.axis('off')
-# plt.show()
 
-import cloudinary
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-cloudinary.config(
-  cloud_name = 'dggbuxa59',  
-  api_key = '651855936159331',  
-  api_secret = 'YZcmgha2qUntVE_QrxeCThMLJEM'  
-)
-respone = cloudinary.uploader.upload(out_img_siggraph17_name)
-print(respone)
